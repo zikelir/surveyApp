@@ -101,21 +101,28 @@ angular.module('starter.controllers', [])
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
                 template: '<input type="password" ng-model="data.wifi">',
-                title: 'Enter Wi-Fi Password',
-                subTitle: 'Please use normal things',
+                title: 'Enter the manager Password',
+                subTitle: 'restricted area',
                 scope: $scope,
-                buttons: [
-                    { text: 'Cancel/Back' },
+                buttons: [{
+                        text: 'Cancel/Back',
+                        onTap: function(e) {
+                            $state.go("tab.dash");
+                            // e.preventDefault();
+                        }
+                    },
                     {
                         text: '<b>Confirm</b>',
                         type: 'button-positive',
                         onTap: function(e) {
-                            if (!$scope.data.wifi || $scope.data.wifi != 12345) {
+                            if ($scope.data.wifi === 12345) {
                                 //don't allow the user to close unless he enters wifi password
-                                $state.go("tab.dash");
-                                e.preventDefault();
-                            } else {
+                                // e.preventDefault();
                                 $state.go("tab.account");
+                            }
+                            if ($scope.data.wifi != 12345) {
+                                // e.preventDefault();
+                                $state.go("tab.dash");
                             }
                         }
                     },
