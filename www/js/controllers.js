@@ -54,62 +54,97 @@ angular.module('starter.controllers', [])
         // $scope.showPopup = function() {
         $scope.data = {};
 
-        $ionicPopup.prompt({
-            title: 'Password Check',
-            template: 'Enter your secret password',
-            title: 'Enter Password',
-            inputType: 'password',
-            inputPlaceholder: 'Your password',
-            scope: $scope,
-            buttons: [{
-                    text: 'Cancel',
-                    onTap: function(e) {
-                        return false;
-                    }
-                },
-                {
-                    text: '<b>Confirm</b>',
-                    type: 'button-positive',
-                    onTap: function(e) {
-                        if ($scope.data.wifi === 12345) {
-                            return true;
-                        }
-                    }
-                },
-            ]
-        }).then(function(res) {
-            if (res === true) {
-                $state.go("tab.account");
-            } else {
-                $state.go("tab.dash");
-            }
-            console.log('Tapped!', res);
-        }, function(err) {
-            $state.go("tab.dash");
-            console.log('Err:', err);
-        }, function(msg) {
-            console.log('message:', msg);
-        });
-
-
-        // };
-
-
         // $ionicPopup.prompt({
         //     title: 'Password Check',
         //     template: 'Enter your secret password',
-        // inputType: 'password',
-        // inputPlaceholder: 'Your password'
-        // }).then(
-        //     function(res) {
-        //         console.log(res);
-        //         if (res === 12345) {
-        //             console.log("ok");
-        //             $state.go("tab.account");
-        //         } else {
-        //             $state.go("tab.dash");
-        //         }
-        //     });
+        //     title: 'Enter Password',
+        //     inputType: 'password',
+        //     inputPlaceholder: 'Your password',
+        //     scope: $scope,
+        //     buttons: [{
+        //             text: 'Cancel',
+        //             onTap: function(e) {
+        //                 return false;
+        //             }
+        //         },
+        //         {
+        //             text: '<b>Confirm</b>',
+        //             type: 'button-positive',
+        //             onTap: function(e) {
+        //                 if ($scope.data.wifi === 12345) {
+        //                     return true;
+        //                 }
+        //             }
+        //         },
+        //     ]
+        // }).then(function(res) {
+        //     if (res === true) {
+        //         $state.go("tab.account");
+        //     } else {
+        //         $state.go("tab.dash");
+        //     }
+        //     console.log('Tapped!', res);
+        // }, function(err) {
+        //     $state.go("tab.dash");
+        //     console.log('Err:', err);
+        // }, function(msg) {
+        //     console.log('message:', msg);
+        // });
+
+
+        // // };
+
+
+        $scope.showPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<input type="password" ng-model="data.wifi">',
+                title: 'Enter Wi-Fi Password',
+                subTitle: 'Please use normal things',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel/Back' },
+                    {
+                        text: '<b>Confirm</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.wifi || $scope.data.wifi != 12345) {
+                                //don't allow the user to close unless he enters wifi password
+                                $state.go("tab.dash");
+                                e.preventDefault();
+                            } else {
+                                $state.go("tab.account");
+                            }
+                        }
+                    },
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 300000000);
+        };
+        // A confirm dialog
+        $scope.showConfirm = function() {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Consume Ice Cream',
+                template: 'Are you sure you want to eat this ice cream?'
+            });
+            confirmPopup.then(function(res) {
+                if (res) {
+                    console.log('You are sure');
+                } else {
+                    console.log('You are not sure');
+                }
+            });
+        };
+
+        $scope.showPopup();
+
 
     });
 
