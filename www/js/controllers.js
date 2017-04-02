@@ -51,49 +51,6 @@ angular.module('starter.controllers', [])
 
     $scope.$on("$ionicView.beforeEnter", function(event, data) {
         // handle event
-        // $scope.showPopup = function() {
-        $scope.data = {};
-
-        // $ionicPopup.prompt({
-        //     title: 'Password Check',
-        //     template: 'Enter your secret password',
-        //     title: 'Enter Password',
-        //     inputType: 'password',
-        //     inputPlaceholder: 'Your password',
-        //     scope: $scope,
-        //     buttons: [{
-        //             text: 'Cancel',
-        //             onTap: function(e) {
-        //                 return false;
-        //             }
-        //         },
-        //         {
-        //             text: '<b>Confirm</b>',
-        //             type: 'button-positive',
-        //             onTap: function(e) {
-        //                 if ($scope.data.wifi === 12345) {
-        //                     return true;
-        //                 }
-        //             }
-        //         },
-        //     ]
-        // }).then(function(res) {
-        //     if (res === true) {
-        //         $state.go("tab.account");
-        //     } else {
-        //         $state.go("tab.dash");
-        //     }
-        //     console.log('Tapped!', res);
-        // }, function(err) {
-        //     $state.go("tab.dash");
-        //     console.log('Err:', err);
-        // }, function(msg) {
-        //     console.log('message:', msg);
-        // });
-
-
-        // // };
-
 
         $scope.showPopup = function() {
             $scope.data = {}
