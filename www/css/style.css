@@ -1,0 +1,16 @@
+/* Empty. Add your own CSS if you like */
+
+.background {
+    background-color: #133F69 !important;
+    color: #fff;
+}
+
+h4,
+h3,
+.secondaryFont {
+    color: #133F69 !important;
+}
+
+.centered {
+    text-align: center;
+}
