@@ -3,7 +3,7 @@
         <h3 style="margin-top: 5px;">Welcome to My Survey App</h3>
         <h4 class="padding"> Please, provide us some informations about you: </h4>
         <div class="list">
-            <form ng-submit="persistSurvey();">
+            <form name="myForm" ng-submit="persistSurvey();" novalidate>
                 <label class="item item-input item-floating-label" style="border-top: 0px solid white !important; margin-top: 10px;"> 
           <span class="input-label"  style="border-top: 0px solid white !important;">First Name</span>
           <input type="text" placeholder="First name"   style="border-top: 0px solid white !important;" ng-model="firstName" name="name" required>
@@ -29,8 +29,7 @@
         <span class="input-label">Skills</span>
         <textarea  placeholder="AngularJS, NodeJS" ng-model="comment" name="comment" required></textarea>
       </label>
-
-                <button type="submit" class="button button-positive background" style="margin-top: 15px;" href="#/app/dash"> SUBMIT </button>
+                <button type="submit" class="button button-positive background" style="margin-top: 15px;" href="#/app/dash" ng-disabled="myForm.$invalid"> SUBMIT </button>
         </div>
 
         </form>

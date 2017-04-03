@@ -23,6 +23,7 @@ angular.module('starter.controllers', [])
         this.email = "";
         this.phone = "";
         this.comment = "";
+        alert('saved! :)');
     }
 })
 
@@ -89,7 +90,8 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason
+                // myPopup.close(); //close the popup after 3 seconds for some reason
+                $state.go("tab.dash");
             }, 300000000);
         };
         // A confirm dialog
@@ -114,6 +116,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.localstorage = [];
+    $scope.aux = [];
 
     for (var i = 0, len = $window.localStorage.length; i < len; i++) {
         var key = $window.localStorage.key(i);
@@ -121,5 +124,4 @@ angular.module('starter.controllers', [])
         console.log("Pessoa " + i + " -> " + value);
         $scope.localstorage.push("Pessoa " + i + " -> " + value);
     }
-
 });
