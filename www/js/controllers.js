@@ -154,7 +154,7 @@ angular.module('starter.controllers', [])
 //     $scope.chat = Chats.get($stateParams.chatId);
 // })
 
-.controller('AccountCtrl', function($scope, $window, $state, $ionicPopup, $timeout, $q) {
+.controller('AccountCtrl', function($scope, $window, $state, $ionicPopup, $timeout, $q, $http) {
 
     // Triggered on a button click, or some other target
 
@@ -232,4 +232,19 @@ angular.module('starter.controllers', [])
         console.log("Pessoa " + i + " -> " + value);
         $scope.localstorage.push("Pessoa " + i + " -> " + value);
     }
+
+    $scope.doRefresh = function() {
+        $scope.localstorage = [];
+        $scope.aux = [];
+
+        for (var i = 0, len = $window.localStorage.length; i < len; i++) {
+            var key = $window.localStorage.key(i);
+            var value = $window.localStorage[key];
+            console.log("Pessoa " + i + " -> " + value);
+            $scope.localstorage.push("Pessoa " + i + " -> " + value);
+        }
+
+        // Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+    };
 });

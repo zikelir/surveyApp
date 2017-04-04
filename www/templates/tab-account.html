@@ -1,5 +1,7 @@
 <ion-view view-title="Account">
     <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
         <!--<h3 ng-repeat="itens in localstorage">{{itens}}</h3>-->
         <h3 ng-repeat="itens in localstorage">
             {{itens}}
