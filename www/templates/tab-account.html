@@ -1,5 +1,5 @@
 <ion-view view-title="Account">
-    <ion-content>
+    <ion-content class="centered">
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
         </ion-refresher>
         <!--<h3 ng-repeat="itens in localstorage">{{itens}}</h3>-->
@@ -7,12 +7,14 @@
             {{itens}}
         </h3>
 
-        <div class="float-button">
+        <button class="button button-positive background" ng-click="sendPeopleToDatabase()">submit</button>
+
+        <!--<div class="float-button">
             <span class="height-fix">
        <button id="fab-profile" class="button button-fab button-fab-bottom-right fab-fixed button-positive pane" nav-view="active" style="opacity: 1; transform: translate3d(0%, 0px, 0px);">
          <i class="icon ion-plus"></i>
        </button>
-     </span>
+     </span>-->
         </div>
     </ion-content>
 </ion-view>

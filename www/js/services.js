@@ -1,42 +1,63 @@
 angular.module('starter.services', [])
 
-.factory('Surveys', function() {
-    var surveys = [{}];
-    var i = 1;
-    return {
-        all: function() {
-            var surveyString = window.localStorage['surveys'];
-            if (surveyString) {
-                return angular.fromJson(surveyString);
-            }
-            return [];
-        },
-        save: function(surveys) {
-            window.localStorage['surveys'] = angular.toJson(surveys);
-        },
-        newSurvey: function(survey) {
-            return {
-                survey_id: i++,
-                station_name: survey.stationName,
-                line: survey.line,
-                time: survey.time,
-                direction: survey.direction,
-                element_id: survey.elementID,
-                component_id: survey.componentID,
-                surveyor: survey.surveyor,
-                notes: survey.dashNote,
-            };
-        },
-        get: function(surveyId) {
-            return surveys[surveyId];
-        },
-        getLastActiveIndex: function() {
-            return parseInt(window.localStorage['lastActiveSurvey']) || 0;
-        },
-        setLastActiveIndex: function(index) {
-            window.localStorage['lastActiveSurvey'] = index;
+.factory('Surveys', function($http, $q) {
+    // var surveys = [{}];
+    // var i = 1;
+    // return {
+    //     all: function() {
+    //         var surveyString = window.localStorage['surveys'];
+    //         if (surveyString) {
+    //             return angular.fromJson(surveyString);
+    //         }
+    //         return [];
+    //     },
+    //     save: function(surveys) {
+    //         window.localStorage['surveys'] = angular.toJson(surveys);
+    //     },
+    //     newSurvey: function(survey) {
+    //         return {
+    //             survey_id: i++,
+    //             station_name: survey.stationName,
+    //             line: survey.line,
+    //             time: survey.time,
+    //             direction: survey.direction,
+    //             element_id: survey.elementID,
+    //             component_id: survey.componentID,
+    //             surveyor: survey.surveyor,
+    //             notes: survey.dashNote,
+    //         };
+    //     },
+    //     get: function(surveyId) {
+    //         return surveys[surveyId];
+    //     },
+    //     getLastActiveIndex: function() {
+    //         return parseInt(window.localStorage['lastActiveSurvey']) || 0;
+    //     },
+    //     setLastActiveIndex: function(index) {
+    //         window.localStorage['lastActiveSurvey'] = index;
+    //     }
+    // }
+
+    var self = this;
+
+    var __apiUrl = 'https://mysurveyapi.mybluemix.net';
+    self.sendPeopleToDatabase = function(obj) {
+        var deferred = $q.defer();
+
+        $http.post(__apiUrl + '/cache', obj).then(success, fail);
+
+        function success(result) {
+            deferred.resolve(result.data);
         }
-    }
+
+        function fail(error) {
+            console.error(error);
+            deferred.reject(error.data);
+        }
+
+        return deferred.promise;
+    };
+    return self;
 })
 
 .factory('Chats', function() {

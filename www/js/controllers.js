@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $window, $state, $cordovaFile, $ionicPlatform, $timeout, $ionicModal, $ionicSideMenuDelegate, Surveys, $http) {
+.controller('DashCtrl', function($scope, $window, $state, $cordovaFile, $ionicPlatform, $timeout, $ionicModal, $ionicSideMenuDelegate, $http) {
     $scope.firstName = "";
     $scope.conclusion = "";
     $scope.email = "";
@@ -154,7 +154,7 @@ angular.module('starter.controllers', [])
 //     $scope.chat = Chats.get($stateParams.chatId);
 // })
 
-.controller('AccountCtrl', function($scope, $window, $state, $ionicPopup, $timeout, $q, $http) {
+.controller('AccountCtrl', function($scope, $window, $state, $ionicPopup, $timeout, $q, $http, $cordovaEmailComposer, Surveys) {
 
     // Triggered on a button click, or some other target
 
@@ -171,7 +171,7 @@ angular.module('starter.controllers', [])
                 subTitle: 'restricted area',
                 scope: $scope,
                 buttons: [{
-                        text: 'Cancel/Back',
+                        text: 'Cancel',
                         onTap: function(e) {
                             $state.go("tab.dash");
                             // e.preventDefault();
@@ -219,12 +219,31 @@ angular.module('starter.controllers', [])
 
         $scope.showPopup();
 
+        $scope.sendPeopleToDatabase = function() {
+            Surveys.sendPeopleToDatabase($scope.aux).then(success, fail);
+
+            function success(response) {
+                debugger;
+            }
+
+            function fail() {
+                debugger;
+            }
+        }
+
 
     });
 
 
     $scope.localstorage = [];
-    $scope.aux = [];
+    $scope.aux = { form: [] };
+
+    for (var i = 0, len = $window.localStorage.length; i < len; i++) {
+        var key = $window.localStorage.key(i);
+        var value = $window.localStorage[key];
+        console.log("Pessoa " + i + " -> " + value);
+        $scope.aux.form.push(value);
+    }
 
     for (var i = 0, len = $window.localStorage.length; i < len; i++) {
         var key = $window.localStorage.key(i);
@@ -232,7 +251,6 @@ angular.module('starter.controllers', [])
         console.log("Pessoa " + i + " -> " + value);
         $scope.localstorage.push("Pessoa " + i + " -> " + value);
     }
-
     $scope.doRefresh = function() {
         $scope.localstorage = [];
         $scope.aux = [];
@@ -243,6 +261,15 @@ angular.module('starter.controllers', [])
             console.log("Pessoa " + i + " -> " + value);
             $scope.localstorage.push("Pessoa " + i + " -> " + value);
         }
+
+        for (var i = 0, len = $window.localStorage.length; i < len; i++) {
+            var key = $window.localStorage.key(i);
+            var value = $window.localStorage[key];
+            console.log("Pessoa " + i + " -> " + value);
+            $scope.aux.form.push(value);
+        }
+
+        console.log($scope.localstorage + " localstorage");
 
         // Stop the ion-refresher from spinning
         $scope.$broadcast('scroll.refreshComplete');
