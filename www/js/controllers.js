@@ -22,18 +22,18 @@ angular.module('starter.controllers', [])
             { id: '2021/1', name: '2021/1' },
             { id: '2021/2', name: '2021/2' },
             { id: '2022/1', name: '2022/1' },
-            { id: '2022/2', name: '2022/2' }
+            { id: '2022/2', name: '2022/2' },
+            { id: 'concluded', name: 'concluded' }
         ]
     };
 
 
     $scope.persistSurvey = function() {
         this.surveyData.push(" nome: " + this.firstName);
-        this.surveyData.push(" conclusion: " + this.conclusion);
+        this.surveyData.push(" conclusion: " + this.data.model);
         this.surveyData.push(" email: " + this.email);
         this.surveyData.push(" course: " + this.course);
         this.surveyData.push(" comentários: " + this.comment);
-        this.surveyData.push(" outro: " + this.other);
         console.log($scope.surveyData);
         $window.localStorage.setItem(this.firstName, this.surveyData);
         this.surveyData = [];
@@ -42,7 +42,6 @@ angular.module('starter.controllers', [])
         this.email = "";
         this.course = "";
         this.comment = "";
-        this.other = "";
         alert('saved! :)');
     }
 
