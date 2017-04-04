@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
     $scope.comment = "";
     $scope.other = "";
     $scope.surveyData = [];
-    $scope.data = {
+    $scope.conclusion = {
         model: null,
         availableOptions: [
             { id: '2017/1', name: '2017/1' },
@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
 
     $scope.persistSurvey = function() {
         this.surveyData.push(" nome: " + this.firstName);
-        this.surveyData.push(" conclusion: " + this.data.model);
+        this.surveyData.push(" conclusion: " + this.conclusion.model);
         this.surveyData.push(" email: " + this.email);
         this.surveyData.push(" course: " + this.course);
         this.surveyData.push(" comentários: " + this.comment);
