@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $window, $state, $cordovaFile) {
+.controller('DashCtrl', function($scope, $window, $state, $cordovaFile, $ionicPlatform) {
     $scope.firstName = "";
     $scope.lastName = "";
     $scope.email = "";
@@ -25,6 +25,62 @@ angular.module('starter.controllers', [])
         this.comment = "";
         alert('saved! :)');
     }
+
+    $ionicPlatform.ready(function() {
+        console.log('device ready');
+        angular.element(document).ready(function() {
+            angular.element(document.body).injector().invoke(['$cordovaFile', function($cordovaFile) {
+                $cordovaFile.getFreeDiskSpace()
+                    .then(function(success) {
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                // CREATE
+                $cordovaFile.createDir(cordova.file.dataDirectory, "new_dir", false)
+                    .then(function(success) {
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                $cordovaFile.createFile(cordova.file.dataDirectory, "new_file.txt", true)
+                    .then(function(success) {
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                // WRITE
+                $cordovaFile.writeFile(cordova.file.dataDirectory, "file.txt", "text", true)
+                    .then(function(success) {
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                $cordovaFile.writeExistingFile(cordova.file.dataDirectory, "file.txt", "text")
+                    .then(function(success) {
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+
+
+                // READ
+                $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
+                    .then(function(success) {
+                        console.log(success);
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+
+            }]);
+        }); //
+    });
 })
 
 // .controller('ChatsCtrl', function($scope, Chats) {

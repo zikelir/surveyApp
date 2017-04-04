@@ -22,59 +22,60 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
 
         //
-        console.log('device ready');
-        angular.element(document).ready(function() {
-            angular.element(document.body).injector().invoke(['$scope', '$cordovaFile', function($cordovaFile) {
-                $cordovaFile.getFreeDiskSpace()
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+        // console.log('device ready');
+        // angular.element(document).ready(function() {
+        //     angular.element(document.body).injector().invoke(['$cordovaFile', function($cordovaFile) {
+        //         $cordovaFile.getFreeDiskSpace()
+        //             .then(function(success) {
+        //                 console.log(success);
+        //             }, function(error) {
+        //                 console.log(error);
+        //             });
 
-                // CREATE
-                $cordovaFile.createDir(cordova.file.dataDirectory, "new_dir", false)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+        //         // CREATE
+        //         $cordovaFile.createDir(cordova.file.dataDirectory, "new_dir", false)
+        //             .then(function(success) {
+        //                 console.log(success);
+        //             }, function(error) {
+        //                 console.log(error);
+        //             });
 
-                $cordovaFile.createFile(cordova.file.dataDirectory, "new_file.txt", true)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+        //         $cordovaFile.createFile(cordova.file.dataDirectory, "new_file.txt", true)
+        //             .then(function(success) {
+        //                 console.log(success);
+        //             }, function(error) {
+        //                 console.log(error);
+        //             });
 
-                // WRITE
-                $cordovaFile.writeFile(cordova.file.dataDirectory, "file.txt", "text", true)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+        //         // WRITE
+        //         $cordovaFile.writeFile(cordova.file.dataDirectory, "file.txt", "text", true)
+        //             .then(function(success) {
+        //                 console.log(success);
+        //             }, function(error) {
+        //                 console.log(error);
+        //             });
 
-                $cordovaFile.writeExistingFile(cordova.file.dataDirectory, "file.txt", "text")
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
-
-
-                // READ
-                $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+        //         $cordovaFile.writeExistingFile(cordova.file.dataDirectory, "file.txt", "text")
+        //             .then(function(success) {
+        //                 console.log(success);
+        //             }, function(error) {
+        //                 console.log(error);
+        //             });
 
 
-            }]);
-        });
 
+        //         // READ
+        //         $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
+        //             .then(function(success) {
+        //                 console.log(success);
+        //             }, function(error) {
+        //                 console.log(error);
+        //             });
+
+
+        //     }]);
+        // });
+        //
 
     });
 })
