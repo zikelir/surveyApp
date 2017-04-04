@@ -4,5 +4,16 @@
         <h3 ng-repeat="itens in localstorage">
             {{itens}}
         </h3>
+
+        <div class="float-button">
+            <span class="height-fix">
+       <button id="fab-profile" class="button button-fab button-fab-bottom-right fab-fixed button-positive pane" nav-view="active" style="opacity: 1; transform: translate3d(0%, 0px, 0px);">
+         <i class="icon ion-plus"></i>
+       </button>
+     </span>
+        </div>
+        <ion-content ng-controller="DocumentController as vm" class="padding">
+            <p><button ng-click="vm.createInvoice()" class="button icon-left ion-play button-assertive">Create Invoice</button></p>
+        </ion-content>
     </ion-content>
 </ion-view>

@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $window, $state) {
+.controller('DashCtrl', function($scope, $window, $state, $cordovaFile) {
     $scope.firstName = "";
     $scope.lastName = "";
     $scope.email = "";
