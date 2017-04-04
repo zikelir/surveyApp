@@ -10,8 +10,8 @@
       </label>
 
                 <label class="item item-input item-floating-label">
-        <span class="input-label">Last Name</span>
-        <input type="text" placeholder="Last name" ng-model="lastName" required>
+        <span class="input-label">Course</span>
+        <input type="text" placeholder="Course" ng-model="course" required>
       </label>
 
                 <label class="item item-input item-floating-label">
@@ -19,15 +19,21 @@
         <input type="text" placeholder="john@suhr.com" ng-model="email" required>
       </label>
 
+                <div>
+
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                        Conclusion
+                        </div>
+                        <select>
+                        <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+                        </select>
+                    </label>
+                </div>
 
                 <label class="item item-input item-floating-label">
-        <span class="input-label">Phone</span>
-        <input type="text" placeholder="(21) 2777-7777" ng-model="phone" required>
-      </label>
-
-                <label class="item item-input item-floating-label">
-        <span class="input-label">Skills</span>
-        <textarea  placeholder="AngularJS, NodeJS" ng-model="comment" name="comment" required></textarea>
+        <span class="input-label">Comments</span>
+        <textarea  placeholder="leave a comment" ng-model="comment" name="comment" required></textarea>
       </label>
                 <button type="submit" class="button button-positive background" style="margin-top: 15px;" href="#/app/dash" ng-disabled="myForm.$invalid"> SUBMIT </button>
         </div>

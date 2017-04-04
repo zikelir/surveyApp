@@ -1,86 +1,139 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $window, $state, $cordovaFile, $ionicPlatform) {
+.controller('DashCtrl', function($scope, $window, $state, $cordovaFile, $ionicPlatform, $timeout, $ionicModal, $ionicSideMenuDelegate, Surveys, $http) {
     $scope.firstName = "";
-    $scope.lastName = "";
+    $scope.conclusion = "";
     $scope.email = "";
-    $scope.phone = "";
+    $scope.course = "";
     $scope.comment = "";
+    $scope.other = "";
     $scope.surveyData = [];
+    $scope.data = {
+        model: null,
+        availableOptions: [
+            { id: '2017/1', name: '2017/1' },
+            { id: '2017/2', name: '2017/2' },
+            { id: '2018/1', name: '2018/1' },
+            { id: '2018/2', name: '2018/2' },
+            { id: '2019/1', name: '2019/1' },
+            { id: '2019/2', name: '2019/2' },
+            { id: '2020/1', name: '2020/1' },
+            { id: '2020/2', name: '2020/2' },
+            { id: '2021/1', name: '2021/1' },
+            { id: '2021/2', name: '2021/2' },
+            { id: '2022/1', name: '2022/1' },
+            { id: '2022/2', name: '2022/2' }
+        ]
+    };
 
 
     $scope.persistSurvey = function() {
         this.surveyData.push(" nome: " + this.firstName);
-        this.surveyData.push(" sobrenome: " + this.lastName);
+        this.surveyData.push(" conclusion: " + this.conclusion);
         this.surveyData.push(" email: " + this.email);
-        this.surveyData.push(" tel: " + this.phone);
+        this.surveyData.push(" course: " + this.course);
         this.surveyData.push(" comentários: " + this.comment);
+        this.surveyData.push(" outro: " + this.other);
         console.log($scope.surveyData);
         $window.localStorage.setItem(this.firstName, this.surveyData);
         this.surveyData = [];
         this.firstName = "";
-        this.lastName = "";
+        this.course = "";
         this.email = "";
-        this.phone = "";
+        this.course = "";
         this.comment = "";
+        this.other = "";
         alert('saved! :)');
     }
 
-    $ionicPlatform.ready(function() {
-        console.log('device ready');
-        angular.element(document).ready(function() {
-            angular.element(document.body).injector().invoke(['$cordovaFile', function($cordovaFile) {
-                $cordovaFile.getFreeDiskSpace()
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+    // $ionicPlatform.ready(function() {
+    //     console.log('device ready');
+    //     angular.element(document).ready(function() {
+    //         angular.element(document.body).injector().invoke(['$cordovaFile', function($cordovaFile) {
+    //             $cordovaFile.getFreeDiskSpace()
+    //                 .then(function(success) {
+    //                     console.log(success);
+    //                 }, function(error) {
+    //                     console.log(error);
+    //                 });
 
-                // CREATE
-                $cordovaFile.createDir(cordova.file.dataDirectory, "new_dir", false)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+    //             // CREATE
+    //             $cordovaFile.createDir(cordova.file.dataDirectory, "new_dir", false)
+    //                 .then(function(success) {
+    //                     console.log(success);
+    //                 }, function(error) {
+    //                     console.log(error);
+    //                 });
 
-                $cordovaFile.createFile(cordova.file.dataDirectory, "new_file.txt", true)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+    //             $cordovaFile.createFile(cordova.file.dataDirectory, "new_file.txt", true)
+    //                 .then(function(success) {
+    //                     console.log(success);
+    //                 }, function(error) {
+    //                     console.log(error);
+    //                 });
 
-                // WRITE
-                $cordovaFile.writeFile(cordova.file.dataDirectory, "file.txt", "text", true)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+    //             // WRITE
+    //             $cordovaFile.writeFile(cordova.file.dataDirectory, "file.txt", "text", true)
+    //                 .then(function(success) {
+    //                     console.log(success);
+    //                 }, function(error) {
+    //                     console.log(error);
+    //                 });
 
-                $cordovaFile.writeExistingFile(cordova.file.dataDirectory, "file.txt", "text")
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
-
-
-
-                // READ
-                $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
-                    .then(function(success) {
-                        console.log(success);
-                    }, function(error) {
-                        console.log(error);
-                    });
+    //             $cordovaFile.writeExistingFile(cordova.file.dataDirectory, "file.txt", "text")
+    //                 .then(function(success) {
+    //                     console.log(success);
+    //                 }, function(error) {
+    //                     console.log(error);
+    //                 });
 
 
-            }]);
-        }); //
-    });
+
+    //             // READ
+    //             $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
+    //                 .then(function(success) {
+    //                     console.log(success);
+    //                 }, function(error) {
+    //                     console.log(error);
+    //                 });
+
+
+    //         }]);
+    //     }); //
+
+    // });
+
+    $scope.surveys = [];
+    $scope.selectedStations = null;
+    $scope.stations = [];
+    $scope.mySelectedStation;
+    var date = new Date();
+    $scope.date = date;
+    $scope.startSurvey = function(station) {
+        station.train_arrive1 = new Date();
+    };
+
+    var createSurvey = function(survey) {
+        var newSurvey = Surveys.newSurvey(survey);
+        $scope.surveys.push(newSurvey);
+        Surveys.save($scope.surveys);
+        $scope.selectSurvey(newSurvey, $scope.surveys.length - 1);
+        $ionicPlatform.ready(function() {
+            alert('cordova.file.dataDirectory: ' + cordova); //I get [object Object]
+            alert('cordova.file.dataDirectory: ' + cordova.file.dataDirectory); // I get file is undefined
+            $cordovaFile.writeFile(cordova.file.dataDirectory, 'surveys.json', $scope.surveys, true).then(function(result) {
+                alert('Success! Survey created!');
+            }, function(err) {
+                console.log("ERROR");
+            })
+        });
+    }
+
+    $scope.newSurvey = function(survey) {
+        createSurvey(survey);
+    };
+
+
 })
 
 // .controller('ChatsCtrl', function($scope, Chats) {
