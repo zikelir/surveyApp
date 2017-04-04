@@ -252,7 +252,7 @@ angular.module('starter.controllers', [])
 
         var keys = Object.keys($window.localStorage);
 
-        keys.forEach((key, index) => {
+        keys.forEach(function(key, index) {
             var value = $window.localStorage[key];
 
             $scope.localstorage.push("Pessoa " + index + " -> " + value);
