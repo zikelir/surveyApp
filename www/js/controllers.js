@@ -223,55 +223,40 @@ angular.module('starter.controllers', [])
             Surveys.sendPeopleToDatabase($scope.aux).then(success, fail);
 
             function success(response) {
-                debugger;
+                alert("sent to the server!");
             }
 
-            function fail() {
-                debugger;
-            }
+            function fail() {}
         }
 
 
     });
 
+    addLocalstorageToScope();
 
-    $scope.localstorage = [];
-    $scope.aux = { form: [] };
-
-    for (var i = 0, len = $window.localStorage.length; i < len; i++) {
-        var key = $window.localStorage.key(i);
-        var value = $window.localStorage[key];
-        console.log("Pessoa " + i + " -> " + value);
-        $scope.aux.form.push(value);
-    }
-
-    for (var i = 0, len = $window.localStorage.length; i < len; i++) {
-        var key = $window.localStorage.key(i);
-        var value = $window.localStorage[key];
-        console.log("Pessoa " + i + " -> " + value);
-        $scope.localstorage.push("Pessoa " + i + " -> " + value);
-    }
     $scope.doRefresh = function() {
-        $scope.localstorage = [];
-        $scope.aux = [];
-
-        for (var i = 0, len = $window.localStorage.length; i < len; i++) {
-            var key = $window.localStorage.key(i);
-            var value = $window.localStorage[key];
-            console.log("Pessoa " + i + " -> " + value);
-            $scope.localstorage.push("Pessoa " + i + " -> " + value);
-        }
-
-        for (var i = 0, len = $window.localStorage.length; i < len; i++) {
-            var key = $window.localStorage.key(i);
-            var value = $window.localStorage[key];
-            console.log("Pessoa " + i + " -> " + value);
-            $scope.aux.form.push(value);
-        }
-
         console.log($scope.localstorage + " localstorage");
+
+        addLocalstorageToScope();
 
         // Stop the ion-refresher from spinning
         $scope.$broadcast('scroll.refreshComplete');
     };
+
+    /**
+     * Get the values from the localStorage window and saves it inside the controller
+     */
+    function addLocalstorageToScope() {
+        $scope.localstorage = [];
+        $scope.aux = { form: [] };
+
+        var keys = Object.keys($window.localStorage);
+
+        keys.forEach((key, index) => {
+            var value = $window.localStorage[key];
+
+            $scope.localstorage.push("Pessoa " + index + " -> " + value);
+            $scope.aux.form.push(value);
+        });
+    }
 });
